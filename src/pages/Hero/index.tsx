@@ -1,10 +1,10 @@
-import Header from '../../components/Header'
 import RestaurantList from '../../components/RestaurantList'
 import RestaurantOBJ from '../../models/Restaurant'
 
 import Hioki from '../../assets/images/Hioki.png'
 import Trattoria from '../../assets/images/Tarttoria.png'
 import Footer from '../../components/Footer'
+import HeroHeader from '../../components/HeroHeader'
 
 const highlight: RestaurantOBJ[] = [
   {
@@ -65,7 +65,7 @@ const highlight: RestaurantOBJ[] = [
 
 const Hero = () => (
   <>
-    <Header />
+    <HeroHeader />
     <RestaurantList restaurants={highlight} />
     <Footer />
   </>

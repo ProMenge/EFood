@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { colors } from '../../styles'
 import { TagContainer } from '../Tag/styles'
+import { Link } from 'react-router-dom'
 
 export const Card = styled.div`
   background-color: #ffffff;
@@ -66,4 +67,25 @@ export const MainDetails = styled.div`
       margin-right: 8px;
     }
   }
+`
+
+export const Button = styled.button`
+  background-color: ${colors.lightRed};
+  color: ${colors.lightYellow};
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px;
+  display: inline-block;
+  margin-top: 16px;
+  border: none;
+
+  &:hover {
+    background-color: ${colors.darkRed};
+  }
+`
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
 `

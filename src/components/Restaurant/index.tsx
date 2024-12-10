@@ -6,9 +6,10 @@ import {
   ImageContainer,
   Infos,
   MainDetails,
-  Title
+  Title,
+  Button,
+  StyledLink
 } from './styles'
-
 import Star from '../../assets/images/Star.png'
 
 type Props = {
@@ -39,7 +40,9 @@ const Restaurant = ({ title, description, infos, image, stars }: Props) => {
           </div>
         </MainDetails>
         <Description>{description}</Description>
-        <Tag size="big">Saiba Mais</Tag>
+        <Button>
+          <StyledLink to="/restaurant">Saiba Mais</StyledLink>
+        </Button>
       </Details>
     </Card>
   )
