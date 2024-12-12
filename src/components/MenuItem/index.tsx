@@ -1,6 +1,6 @@
-import { Card, ItemImage, ItemInfo, ItemButton } from './styles'
-// import Modal from '../Modal'
-// import { useState } from 'react'
+import { useState } from 'react'
+import Modal from '../Modal'
+import { Card, ItemButton, ItemImage, ItemInfo } from './styles'
 
 type Props = {
   image: string
@@ -9,9 +9,9 @@ type Props = {
 }
 
 const MenuItem = ({ image, title, description }: Props) => {
-  // const [isModalOpen, setModalOpen] = useState(false)
-  // const handleOpenModal = () => setModalOpen(true)
-  // const handleCloseModal = () => setModalOpen(false)
+  const [isModalOpen, setModalOpen] = useState(false)
+  const handleOpenModal = () => setModalOpen(true)
+  const handleCloseModal = () => setModalOpen(false)
   return (
     <>
       <Card>
@@ -20,9 +20,11 @@ const MenuItem = ({ image, title, description }: Props) => {
           <h3>{title}</h3>
           <p>{description}</p>
         </ItemInfo>
-        <ItemButton>Mais Detalhes</ItemButton>
+        <ItemButton onClick={handleOpenModal}>Mais Detalhes</ItemButton>
         {/* onClick={handleOpenModal} */}
       </Card>
+
+      {isModalOpen && <Modal />}
     </>
   )
 }

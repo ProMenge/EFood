@@ -1,5 +1,5 @@
-import { ModalContainer, ModalImage, ModalInfos, ModalButton } from './styles'
 import Pizza from '../../assets/images/Pizza.png'
+import { ModalButton, ModalContainer, ModalImage, ModalInfos } from './styles'
 
 const Modal = () => {
   return (
