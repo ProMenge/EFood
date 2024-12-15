@@ -1,23 +1,36 @@
-import Pizza from '../../assets/images/Pizza.png'
-import { ModalButton, ModalContainer, ModalImage, ModalInfos } from './styles'
+import {
+  ModalButton,
+  ModalClose,
+  ModalContainer,
+  ModalDescription,
+  ModalImage,
+  ModalInfos,
+  ModalTitle
+} from './styles'
 
-const Modal = () => {
+import close from '../../assets/images/close.png'
+
+type Props = {
+  image: string
+  title: string
+  description: string
+  onClose: () => void
+  price: number
+}
+
+const Modal = ({ image, title, description, onClose, price }: Props) => {
   return (
-    <>
-      <ModalContainer>
-        <ModalImage style={{ backgroundImage: `url(${Pizza})` }} />
-        <ModalInfos>
-          <h3>Pizza Marguerita</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, magni
-            natus. Asperiores ipsam itaque adipisci, id animi architecto
-            eligendi aspernatur voluptatem doloribus quo laudantium numquam iure
-            sint. Perferendis, reprehenderit nesciunt!
-          </p>
-          <ModalButton>Adicionar ao carrinho</ModalButton>
-        </ModalInfos>
-      </ModalContainer>
-    </>
+    <ModalContainer>
+      <ModalImage style={{ backgroundImage: `url(${image})` }} />
+      <ModalInfos>
+        <ModalTitle>{title}</ModalTitle>
+        <ModalDescription>{description}</ModalDescription>
+        <ModalButton onClick={onClose}>
+          Adicionar ao carrinho - R${price}
+        </ModalButton>
+      </ModalInfos>
+      <ModalClose src={close} onClick={onClose} />
+    </ModalContainer>
   )
 }
 

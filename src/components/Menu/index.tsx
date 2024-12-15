@@ -1,6 +1,6 @@
-import MenuItem from '../MenuItem'
-import { List, Container } from './styles'
 import MenuItemOBJ from '../../models/MenuItems'
+import MenuItem from '../MenuItem'
+import { Container, List } from './styles'
 
 type Props = {
   menuItems: MenuItemOBJ[]
@@ -11,12 +11,7 @@ const Menu = ({ menuItems }: Props) => {
     <Container>
       <List>
         {menuItems.map((menuItem) => (
-          <MenuItem
-            description={menuItem.description}
-            image={menuItem.image}
-            title={menuItem.title}
-            key={menuItem.id}
-          />
+          <MenuItem item={menuItem} key={menuItem.id} />
         ))}
       </List>
     </Container>

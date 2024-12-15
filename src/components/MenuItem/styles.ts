@@ -43,4 +43,5 @@ export const ItemButton = styled.button`
   border: none;
   color: ${colors.lightRed};
   height: 24px;
+  cursor: pointer;
 `

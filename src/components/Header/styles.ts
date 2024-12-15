@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { colors } from '../../styles'
 import { StyledLink } from '../Restaurant/styles'
 
 export const HeaderBar = styled.header`
@@ -16,6 +17,16 @@ export const HeaderBar = styled.header`
     line-height: 21px;
     font-size: 18px;
   }
+`
+
+export const CartButton = styled.button`
+  font-weight: 900;
+  line-height: 21px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: ${colors.lightRed};
+  cursor: pointer;
 `
 
 export const EfoodLogo = styled.img`

@@ -1,16 +1,16 @@
+import Star from '../../assets/images/Star.png'
 import Tag from '../Tag'
 import {
+  Button,
   Card,
   Description,
   Details,
   ImageContainer,
   Infos,
   MainDetails,
-  Title,
-  Button,
-  StyledLink
+  StyledLink,
+  Title
 } from './styles'
-import Star from '../../assets/images/Star.png'
 
 type Props = {
   title: string

@@ -1,5 +1,5 @@
-import { RestaurantBanner, Infos } from './styles'
 import trattoria from '../../assets/images/TrattoriaBackground.png'
+import { Infos, RestaurantBanner } from './styles'
 
 type Props = {
   name: string

@@ -5,7 +5,6 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 32px;
-  align-items: center;
   justify-content: center;
   background-color: ${colors.lightRed};
   position: fixed;
@@ -23,13 +22,19 @@ export const ModalImage = styled.div`
   background-size: cover;
   background-position: center;
   margin-right: 24px;
-  flex-shrink: 0; /* Evita que o flexbox redimensione o ModalImage */
+  flex-shrink: 0;
 `
 
 export const ModalInfos = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
+  justify-content: space-around;
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+  }
 `
 export const ModalButton = styled.button`
   background-color: ${colors.lightYellow};
@@ -39,4 +44,24 @@ export const ModalButton = styled.button`
   border: none;
   color: ${colors.lightRed};
   height: 24px;
+  max-width: 218px;
+  cursor: pointer;
+`
+export const ModalTitle = styled.h3`
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: 900px;
+`
+
+export const ModalDescription = styled.h3`
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+`
+
+export const ModalClose = styled.img`
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
 `
