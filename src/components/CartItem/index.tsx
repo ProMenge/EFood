@@ -5,23 +5,27 @@ import {
   CartRemove
 } from './styles'
 
+import { removeProduct } from '../../redux/cart/slice'
+
+import { useDispatch } from 'react-redux'
+
 import removeIcon from '../../assets/images/lixeira-de-reciclagem 1.png'
 
 type CartItemProps = {
+  id: number
   image: string
   name: string
   price: number
-
-  onRemove: () => void
 }
 
-const CartItem = ({
-  image,
-  name,
-  price,
+const CartItem = ({ id, image, name, price }: CartItemProps) => {
+  const dispatch = useDispatch()
 
-  onRemove
-}: CartItemProps) => {
+  const handleRemoveClick = () => {
+    dispatch(removeProduct(id)) // Passa o id do item ao dispatch
+    console.log(id)
+  }
+
   return (
     <CartItemContainer>
       <CartItemImage src={image} alt={name} />
@@ -29,8 +33,8 @@ const CartItem = ({
         <h3>{name}</h3>
         <p>R$ {price.toFixed(2)}</p>
       </CartItemInfo>
-      <CartRemove onClick={onRemove}>
-        <img src={removeIcon} />
+      <CartRemove onClick={handleRemoveClick}>
+        <img src={removeIcon} alt="Remover item" />
       </CartRemove>
     </CartItemContainer>
   )

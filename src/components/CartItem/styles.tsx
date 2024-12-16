@@ -10,6 +10,7 @@ export const CartItemContainer = styled.div`
   color: ${colors.lightRed};
   height: 100px;
   width: 344px;
+  margin-bottom: 16px;
 `
 
 export const CartItemImage = styled.img`

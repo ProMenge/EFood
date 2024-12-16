@@ -1,4 +1,6 @@
+import { useDispatch } from 'react-redux'
 import MenuItemOBJ from '../../models/MenuItems'
+import { addProduct } from '../../redux/cart/slice'
 import { Card, ItemButton, ItemImage, ItemInfo } from './styles'
 
 type MenuItemProps = {
@@ -6,7 +8,10 @@ type MenuItemProps = {
 }
 
 const MenuItem = ({ item }: MenuItemProps) => {
-  // const dispatch = useDispatch()
+  const dispacth = useDispatch()
+  const handdleProductClick = () => {
+    dispacth(addProduct(item))
+  }
 
   return (
     <Card>
@@ -15,7 +20,7 @@ const MenuItem = ({ item }: MenuItemProps) => {
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </ItemInfo>
-      <ItemButton>Adicionar</ItemButton>
+      <ItemButton onClick={handdleProductClick}>Adicionar</ItemButton>
     </Card>
   )
 }

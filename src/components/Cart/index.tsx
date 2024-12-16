@@ -5,7 +5,9 @@ import {
   CartItemsContainer
 } from './styles'
 
-import Pizza from '../../assets/images/Pizza.png'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/root-reducer'
+
 import CartItem from '../CartItem'
 
 type CartProps = {
@@ -13,40 +15,28 @@ type CartProps = {
 }
 
 const Cart = ({ onClose }: CartProps) => {
-  const items = [
-    {
-      id: 1,
-      name: 'Pizza Marguerita',
-      price: 60.9,
-      quantity: 1,
-      image: Pizza
-    }
-  ]
+  const { items } = useSelector((state: RootState) => state.cartReducer)
 
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  )
+  const totalPrice = items.reduce((sum, product) => sum + product.price, 0)
 
   return (
     <CartContainer>
       <CartItemsContainer>
-        {items.map((item) => (
+        {items.map((product) => (
           <CartItem
-            image={item.image}
-            name={item.name}
-            price={item.price}
-            key={item.id}
+            image={product.image}
+            name={product.title}
+            price={product.price}
+            key={product.id}
+            id={product.id}
           />
         ))}
       </CartItemsContainer>
       <CartInfos>
         <p>Valor Total: </p>
-        <p>R$ {totalPrice.toFixed(2)}</p>
+        <p>R$: {totalPrice.toFixed(2)} </p>
       </CartInfos>
-      <CartButton onClick={() => console.log('Finalizar compra')}>
-        Finalizar Compra
-      </CartButton>
+      <CartButton>Finalizar Compra</CartButton>
       <CartButton onClick={onClose}>Fechar</CartButton>
     </CartContainer>
   )
