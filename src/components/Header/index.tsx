@@ -15,11 +15,13 @@ const HeroHeader = ({ onCartToggle }: HeaderProps) => {
 
   return (
     <HeaderBar style={{ backgroundImage: `url(${background})` }}>
-      <StyledLink to="/">Restaurantes</StyledLink>
-      <EfoodLogo src={logo} />
-      <CartButton onClick={onCartToggle}>
-        {items.length} produto(s) no carrinho
-      </CartButton>
+      <div className="header-container">
+        <StyledLink to="/">Restaurantes</StyledLink>
+        <EfoodLogo src={logo} />
+        <CartButton onClick={onCartToggle}>
+          {items.length} produto(s) no carrinho
+        </CartButton>
+      </div>
     </HeaderBar>
   )
 }

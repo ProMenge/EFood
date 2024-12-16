@@ -24,12 +24,15 @@ export const RestaurantBanner = styled.div`
 `
 export const Infos = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: start;
+  justify-content: center;
   flex-direction: column;
-  margin-left: 170px;
+  max-width: 1055px;
+  margin: 0 auto;
   height: 280px;
-  width: 100%;
-  padding: 24px 0px 32px 0;
+  padding: 24px;
+  gap: 140px;
+
   h2 {
     font-weight: 900;
     font-size: 32px;

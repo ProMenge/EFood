@@ -10,7 +10,17 @@ export const HeaderBar = styled.header`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center; /* Centraliza o container */
+  box-sizing: border-box;
+  padding: 0 16px;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Alinha as extremidades */
+    align-items: center;
+    max-width: 1030px; /* Mesmo valor dos cards de pizza */
+    width: 100%;
+  }
 
   ${StyledLink} {
     font-weight: 900;
@@ -32,6 +42,6 @@ export const CartButton = styled.button`
 export const EfoodLogo = styled.img`
   width: 125px;
   height: 57.5px;
-  border-right: 10px;
-  position: absolute;
+  position: relative;
+  margin-left: 90px;
 `

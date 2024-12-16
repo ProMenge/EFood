@@ -22,8 +22,12 @@ export const GlobalCss = createGlobalStyle`
   }
 
   .container{
-    max-width: 1900px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  .container2{
+
+    max-width:1476px;
   }
 `
