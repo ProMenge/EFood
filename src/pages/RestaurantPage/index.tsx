@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Pizza from '../../assets/images/Pizza.png'
 import Banner from '../../components/Banner'
 import Cart from '../../components/Cart'
@@ -71,6 +72,8 @@ const itens: MenuItemOBJ[] = [
 ]
 
 const RestaurantPage = () => {
+  const { id } = useParams()
+
   const [isCartOpen, setCartOpen] = useState(false)
 
   const handleToggleCart = () => setCartOpen(!isCartOpen)

@@ -13,22 +13,31 @@ import {
 } from './styles'
 
 type Props = {
+  id: number
   title: string
   description: string
-  infos: string[]
+  info: string
   image: string
-  stars: string
+  stars: number
+  destacado: boolean
 }
 
-const Restaurant = ({ title, description, infos, image, stars }: Props) => {
+const Restaurant = ({
+  id,
+  title,
+  description,
+  info,
+  image,
+  stars,
+  destacado
+}: Props) => {
   return (
     <Card>
       <ImageContainer>
         <img src={image} alt={title} width={472} />
         <Infos>
-          {infos.map((info) => (
-            <Tag key={info}>{info}</Tag>
-          ))}
+          {destacado && <Tag>Destacado</Tag>}
+          <Tag>{info}</Tag>
         </Infos>
       </ImageContainer>
       <Details>
@@ -41,10 +50,11 @@ const Restaurant = ({ title, description, infos, image, stars }: Props) => {
         </MainDetails>
         <Description>{description}</Description>
         <Button>
-          <StyledLink to="/restaurant">Saiba Mais</StyledLink>
+          <StyledLink to={`/restaurant/${id}`}>Saiba Mais</StyledLink>
         </Button>
       </Details>
     </Card>
   )
 }
+
 export default Restaurant
