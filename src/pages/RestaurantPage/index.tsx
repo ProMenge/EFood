@@ -1,88 +1,82 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Pizza from '../../assets/images/Pizza.png'
 import Banner from '../../components/Banner'
 import Cart from '../../components/Cart'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import Menu from '../../components/Menu'
-import MenuItemOBJ from '../../models/MenuItems'
-
-const itens: MenuItemOBJ[] = [
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 1,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  },
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 2,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  },
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 3,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  },
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 4,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  },
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 5,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  },
-  {
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: Pizza,
-    id: 6,
-    modalDescription:
-      'A pizza Margherita é uma pizza clássica da culinária italiana, reconhecida por sua simplicidade e sabor inigualável. Ela é feita com uma base de massa fina e crocante, coberta com molho de tomate fresco, queijo mussarela de alta qualidade, manjericão fresco e azeite de oliva extra-virgem. A combinação de sabores é perfeita, com o molho de tomate suculento e ligeiramente ácido, o queijo derretido e cremoso e as folhas de manjericão frescas, que adicionam um toque de sabor herbáceo. É uma pizza simples, mas deliciosa, que agrada a todos os paladares e é uma ótima opção para qualquer ocasião. Serve: de 2 a 3 pessoas',
-    price: 60.9
-  }
-]
+import { Restaurante } from '../Hero'
 
 const RestaurantPage = () => {
   const { id } = useParams()
 
-  const [isCartOpen, setCartOpen] = useState(false)
+  const [restaurant, setRestaurant] = useState<Restaurante>()
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
+  const [isCartOpen, setCartOpen] = useState(false)
   const handleToggleCart = () => setCartOpen(!isCartOpen)
+
+  // Busca os dados do restaurante da API
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const response = await fetch(
+          `https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`
+        )
+        if (!response.ok) {
+          throw new Error('Erro ao buscar os dados do restaurante.')
+        }
+        const data = await response.json()
+        setRestaurant(data)
+      } catch (err) {
+        if (err instanceof Error) {
+          // Verifica se o erro é uma instância de Error e usa sua mensagem
+          setError(err.message)
+        } else {
+          // Caso contrário, define uma mensagem genérica
+          setError('Ocorreu um erro desconhecido.')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRestaurant()
+  }, [id])
+
+  // Tratamento para loading e erro
+  if (loading) {
+    return <p>Carregando...</p>
+  }
+
+  if (error) {
+    return <p>Erro: {error}</p>
+  }
+
+  // Verifica se o restaurante foi encontrado
+  if (!restaurant) {
+    return <p>Restaurante não encontrado.</p>
+  }
 
   return (
     <>
       <Header onCartToggle={handleToggleCart} />
-      <Banner name="La Dolce Vita Trattoria" type="Italian" />
-      <Menu menuItems={itens} />
+      <Banner
+        name={restaurant.titulo}
+        type={restaurant.tipo}
+        url={restaurant.capa}
+      />
+      <Menu
+        menuItems={restaurant.cardapio.map((item) => ({
+          title: item.nome,
+          description: item.descricao,
+          image: item.foto,
+          id: item.id,
+          modalDescription: `${item.descricao} Serve: ${item.porcao}`,
+          price: item.preco
+        }))}
+      />
       <Footer />
       {/* Renderiza o carrinho condicionalmente */}
       {isCartOpen && <Cart onClose={handleToggleCart} />}

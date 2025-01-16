@@ -6,7 +6,11 @@ export const Card = styled.div`
   padding: 8px;
   position: relative;
   max-width: 320px;
+  display: flex; /* Define um layout flex */
+  flex-direction: column; /* Organiza os elementos verticalmente */
+  height: 100%; /* Garante que o card ocupe a altura completa */
 `
+
 export const ItemImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,4 +48,6 @@ export const ItemButton = styled.button`
   color: ${colors.lightRed};
   height: 24px;
   cursor: pointer;
+
+  margin-top: auto; /* Empurra o botão para o final */
 `

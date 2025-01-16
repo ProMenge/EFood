@@ -1,15 +1,15 @@
-import trattoria from '../../assets/images/TrattoriaBackground.png'
 import { Infos, RestaurantBanner } from './styles'
 
 type Props = {
   name: string
   type: string
+  url: string
 }
 
-const Banner = ({ name, type }: Props) => {
+const Banner = ({ name, type, url }: Props) => {
   return (
     <>
-      <RestaurantBanner style={{ backgroundImage: `url(${trattoria})` }}>
+      <RestaurantBanner style={{ backgroundImage: `url(${url})` }}>
         <Infos>
           <h3>{type}</h3>
 
