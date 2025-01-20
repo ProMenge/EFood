@@ -15,6 +15,21 @@ export const CartContainer = styled.div`
   background-color: ${colors.lightRed};
   color: ${colors.lightYellow};
   padding: 32px 8px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+
+    margin-bottom: 24px;
+  }
 `
 
 export const CartItemsContainer = styled.div`
@@ -34,7 +49,7 @@ export const CartInfos = styled.div`
 export const CartButton = styled.button`
   width: 100%;
   background: ${colors.lightYellow};
-  color: ${colors.darkRed};
+  color: ${colors.lightRed};
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -46,5 +61,50 @@ export const CartButton = styled.button`
 
   &:hover {
     background: ${colors.secondaryYellow};
+  }
+`
+
+export const CartForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    label {
+      width: 155px;
+    }
+  }
+`
+
+export const CartInput = styled.input`
+  border: none;
+  background-color: ${colors.lightYellow};
+  height: 32px;
+  margin-top: 8px;
+`
+
+export const CardNumberDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  label:first-of-type {
+    width: 228px !important;
+  }
+
+  label {
+    width: 88px !important;
   }
 `

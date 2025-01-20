@@ -38,10 +38,15 @@ export const CartItemInfo = styled.div`
 `
 
 export const CartRemove = styled.button`
+  display: block;
+  position: absolute;
+  right: 20px;
   color: white;
   border: none;
   cursor: pointer;
   background: none;
-  margin-top: 70px;
-  margin-left: 90px;
+
+  img {
+    margin-top: 60px;
+  }
 `
