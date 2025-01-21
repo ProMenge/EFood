@@ -1,4 +1,4 @@
-# PhoneList
+# Efood
 
 Este projeto faz parte das atividades do curso de Desenvolvimento Front End da EBAC. A atividade tem como objetivo aprofundar os conhecimentos e habilidades no desenvolvimento de aplicações modernas com React, utilizando TypeScript e Redux para gerenciamento de estado.
 
