@@ -1,8 +1,7 @@
 import RestaurantList from '../../components/RestaurantList'
-
-import { useEffect, useState } from 'react'
 import Footer from '../../components/Footer'
 import HeroHeader from '../../components/HeroHeader'
+import { useGetRestaurantListQuery } from '../../services/api'
 
 export type Cardapio = {
   id: number
@@ -25,20 +24,26 @@ export type Restaurante = {
 }
 
 const Hero = () => {
-  const [restaurant, setRestaurant] = useState<Restaurante[]>([])
+  const { data: restaurants, isLoading, isError } = useGetRestaurantListQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes').then(
-      (res) => res.json().then((res) => setRestaurant(res))
+  if (isLoading) {
+    return <h4>Loading...</h4>
+  }
+
+  if (isError || !restaurants) {
+    return <h4>Error loading restaurants</h4>
+  }
+
+  if (restaurants) {
+    return (
+      <>
+        <HeroHeader />
+        <RestaurantList restaurants={restaurants} />
+        <Footer />
+      </>
     )
-  }, [])
-
-  return (
-    <>
-      <HeroHeader />
-      <RestaurantList restaurants={restaurant} />
-      <Footer />
-    </>
-  )
+  }
+  return <h4>Loading</h4>
 }
+
 export default Hero
