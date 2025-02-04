@@ -8,6 +8,7 @@ import Header from '../../components/Header'
 import Menu from '../../components/Menu'
 
 import { useGetRestaurantQuery } from '../../services/api'
+import Loader from '../../components/Loader'
 
 const RestaurantPage = () => {
   const { id } = useParams() // Obtém o ID do restaurante da URL
@@ -23,7 +24,7 @@ const RestaurantPage = () => {
 
   // Tratamento de loading
   if (isLoading) {
-    return <p>Carregando...</p>
+    return <Loader />
   }
 
   // Tratamento de erro

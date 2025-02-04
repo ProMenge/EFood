@@ -2,6 +2,7 @@ import RestaurantList from '../../components/RestaurantList'
 import Footer from '../../components/Footer'
 import HeroHeader from '../../components/HeroHeader'
 import { useGetRestaurantListQuery } from '../../services/api'
+import Loader from '../../components/Loader'
 
 export type Cardapio = {
   id: number
@@ -27,7 +28,7 @@ const Hero = () => {
   const { data: restaurants, isLoading, isError } = useGetRestaurantListQuery()
 
   if (isLoading) {
-    return <h4>Loading...</h4>
+    return <Loader />
   }
 
   if (isError || !restaurants) {
@@ -38,7 +39,7 @@ const Hero = () => {
     return (
       <>
         <HeroHeader />
-        <RestaurantList restaurants={restaurants} />
+        <RestaurantList isLoading={isLoading} restaurants={restaurants} />
         <Footer />
       </>
     )
