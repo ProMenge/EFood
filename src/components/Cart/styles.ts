@@ -31,6 +31,12 @@ export const CartContainer = styled.div`
 
     margin-bottom: 24px;
   }
+
+  .empty-text {
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+  }
 `
 
 export const CartItemsContainer = styled.div`

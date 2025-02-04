@@ -71,11 +71,21 @@ const Cart = ({ onClose }: CartProps) => {
       .min(3, 'O CVV deve ter 3 caracteres')
       .required('Campo obrigatório'),
     cardMonthExpiry: Yup.string()
-      .min(2, 'O campo deve ter 2 caracteres')
+      .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido')
       .required('Campo obrigatório'),
+
     cardYearExpiry: Yup.string()
-      .min(4, 'O campo deve ter 4 caracteres')
+      .length(4, 'O campo deve ter 4 caracteres')
       .required('Campo obrigatório')
+      .test(
+        'valid-year',
+        'O ano deve ser maior ou igual a ' + new Date().getFullYear(),
+        (value) => {
+          if (!value) return false // Garante que o valor existe
+          const currentYear = new Date().getFullYear()
+          return Number(value) >= currentYear // Verifica se o ano é válido
+        }
+      )
   })
 
   const form = useFormik({
@@ -158,11 +168,26 @@ const Cart = ({ onClose }: CartProps) => {
               />
             ))}
           </S.CartItemsContainer>
-          <S.CartInfos>
-            <p>Valor Total: </p>
-            <p>R$: {totalPrice.toFixed(2)}</p>
-          </S.CartInfos>
-          <S.CartButton onClick={goToAddress}>Finalizar Compra</S.CartButton>
+
+          {/* Exibir mensagem se o carrinho estiver vazio */}
+          {items.length === 0 ? (
+            <p className="empty-text">
+              O carrinho está vazio. Insira um produto para prosseguir com a
+              compra.
+            </p>
+          ) : (
+            <>
+              <S.CartInfos>
+                <p>Valor Total: </p>
+                <p>R$: {totalPrice.toFixed(2)}</p>
+              </S.CartInfos>
+
+              <S.CartButton onClick={goToAddress}>
+                Finalizar Compra
+              </S.CartButton>
+            </>
+          )}
+
           <S.CartButton onClick={onClose}>Fechar</S.CartButton>
         </>
       )}
