@@ -44,7 +44,7 @@ const Hero = () => {
       </>
     )
   }
-  return <h4>Loading</h4>
+  return <Loader />
 }
 
 export default Hero

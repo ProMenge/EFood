@@ -378,6 +378,7 @@ const Cart = ({ onClose }: CartProps) => {
             {/* Botão de confirmar pagamento */}
             <S.CartButton
               type="button"
+              disabled={isLoading}
               onClick={() => {
                 form.validateForm().then((errors) => {
                   if (Object.keys(errors).length === 0) {
@@ -394,7 +395,7 @@ const Cart = ({ onClose }: CartProps) => {
                 })
               }}
             >
-              Confirmar Pagamento
+              {isLoading ? 'Confirmando Pagamento...' : 'Confirmar Pagamento'}
             </S.CartButton>
           </S.CartForm>
 
@@ -405,7 +406,7 @@ const Cart = ({ onClose }: CartProps) => {
       )}
 
       {/* Tela de confirmação apenas se data for true e isLoading for false */}
-      {isSuccess && !isLoading && (
+      {isSuccess && data && (
         <>
           <h3>Compra Confirmada! - ID - {data.orderId}</h3>
           <p>
