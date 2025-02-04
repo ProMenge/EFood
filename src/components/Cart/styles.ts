@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../styles'
+import InputMask from 'react-input-mask'
 
 export const CartContainer = styled.div`
   position: fixed;
@@ -93,6 +94,23 @@ export const CartInput = styled.input`
   background-color: ${colors.lightYellow};
   height: 32px;
   margin-top: 8px;
+  border: 2px solid white;
+
+  &.error {
+    border-color: red;
+  }
+`
+
+export const CartInputMask = styled(InputMask)`
+  border: none;
+  background-color: ${colors.lightYellow};
+  height: 32px;
+  margin-top: 8px;
+  border: 2px solid white;
+
+  &.error {
+    border-color: red;
+  }
 `
 
 export const CardNumberDiv = styled.div`

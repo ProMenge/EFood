@@ -1,16 +1,6 @@
 import Star from '../../assets/images/Star.png'
 import Tag from '../Tag'
-import {
-  Button,
-  Card,
-  Description,
-  Details,
-  ImageContainer,
-  Infos,
-  MainDetails,
-  StyledLink,
-  Title
-} from './styles'
+import * as S from './styles'
 
 type Props = {
   id: number
@@ -32,28 +22,28 @@ const Restaurant = ({
   destacado
 }: Props) => {
   return (
-    <Card>
-      <ImageContainer>
+    <S.Card>
+      <S.ImageContainer>
         <img src={image} alt={title} width={472} />
-        <Infos>
+        <S.Infos>
           {destacado && <Tag>Destacado</Tag>}
           <Tag>{info}</Tag>
-        </Infos>
-      </ImageContainer>
-      <Details>
-        <MainDetails>
-          <Title>{title}</Title>
+        </S.Infos>
+      </S.ImageContainer>
+      <S.Details>
+        <S.MainDetails>
+          <S.Title>{title}</S.Title>
           <div className="stars">
             <p>{stars}</p>
             <img src={Star} alt="Stars" />
           </div>
-        </MainDetails>
-        <Description>{description}</Description>
-        <Button>
-          <StyledLink to={`/restaurant/${id}`}>Saiba Mais</StyledLink>
-        </Button>
-      </Details>
-    </Card>
+        </S.MainDetails>
+        <S.Description>{description}</S.Description>
+        <S.Button>
+          <S.StyledLink to={`/restaurant/${id}`}>Saiba Mais</S.StyledLink>
+        </S.Button>
+      </S.Details>
+    </S.Card>
   )
 }
 

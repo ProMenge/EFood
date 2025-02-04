@@ -1,16 +1,13 @@
-import { useState } from 'react'
-import {
-  CardNumberDiv,
-  CartButton,
-  CartContainer,
-  CartForm,
-  CartInfos,
-  CartInput,
-  CartItemsContainer
-} from './styles'
+import { useEffect, useState } from 'react'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
-import { useSelector } from 'react-redux'
+import * as S from './styles'
+
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/root-reducer'
+import { usePurchaseMutation } from '../../services/api'
+import { clear } from '../../redux/cart/slice'
 
 import CartItem from '../CartItem'
 
@@ -23,6 +20,9 @@ const Cart = ({ onClose }: CartProps) => {
   const [currentStep, setCurrentStep] = useState<
     'items' | 'address' | 'payment' | 'confirmation'
   >('items') // Estado para etapas
+  const [purchase, { data, isSuccess, isLoading }] = usePurchaseMutation()
+  const dispatch = useDispatch()
+
   const totalPrice = items.reduce((sum, product) => sum + product.price, 0)
 
   // Funções para mudar de etapa
@@ -31,12 +31,123 @@ const Cart = ({ onClose }: CartProps) => {
   const goToConfirmation = () => setCurrentStep('confirmation')
   const goToItems = () => setCurrentStep('items')
 
+  const checkInputHasError = (fieldName: string) => {
+    const isTouched = fieldName in form.touched
+    const isInvalid = fieldName in form.errors
+    const hasError = isTouched && isInvalid
+
+    return hasError
+  }
+
+  const addressValidationSchema = Yup.object({
+    name: Yup.string()
+      .min(3, 'O Nome deve ter no mínimo 3 caracteres')
+      .required('O campo é obrigatório'),
+    address: Yup.string()
+      .min(5, 'O endereço deve ter no mínimo 5 caracteres')
+      .required('O campo é obrigatório'),
+    city: Yup.string()
+      .min(4, 'A cidade deve ter no minimo 4 caracteres')
+      .required('O campo é obrigatório'),
+    cep: Yup.string()
+      .min(8, 'O CEP deve conter 8 caracteres')
+      .required('O campo é obrigatório'),
+    addressNumber: Yup.string()
+      .min(1, 'O número de endereço deve conter no mínimo 1 caractere')
+      .required('O campo é obrigatório'),
+    complement: Yup.string()
+      .min(5, 'O complemento deve ter no mínimo 5 caracteres')
+      .notRequired()
+  })
+
+  const paymentValidationSchema = Yup.object({
+    cardName: Yup.string()
+      .min(3, 'O Nome deve ter no mínimo 3 caracteres')
+      .required('O campo é obrigatório'),
+    cardNumber: Yup.string()
+      .min(12, 'O número deve conter no mínimo 12 caracteres')
+      .required('O campo é obrigatório'),
+    CVV: Yup.string()
+      .min(3, 'O CVV deve ter 3 caracteres')
+      .required('Campo obrigatório'),
+    cardMonthExpiry: Yup.string()
+      .min(2, 'O campo deve ter 2 caracteres')
+      .required('Campo obrigatório'),
+    cardYearExpiry: Yup.string()
+      .min(4, 'O campo deve ter 4 caracteres')
+      .required('Campo obrigatório')
+  })
+
+  const form = useFormik({
+    initialValues: {
+      name: '',
+      address: '',
+      city: '',
+      cep: '',
+      addressNumber: '',
+      complement: '',
+      cardName: '',
+      cardNumber: '',
+      CVV: '',
+      cardMonthExpiry: '',
+      cardYearExpiry: ''
+    },
+    validationSchema:
+      currentStep === 'address'
+        ? addressValidationSchema
+        : currentStep === 'payment'
+          ? paymentValidationSchema
+          : null, // Sem validação na etapa de itens ou confirmação
+    validateOnMount: true, // Garante validação ao montar o formulário
+    onSubmit: (values) => {
+      if (currentStep === 'address') {
+        goToPayment() // Avança para pagamento
+      } else if (currentStep === 'payment') {
+        purchase({
+          delivery: {
+            receiver: values.name,
+            address: {
+              description: values.address,
+              city: values.city,
+              zipCode: values.cep,
+              number: values.addressNumber,
+              complement: values.complement
+            }
+          },
+          payment: {
+            card: {
+              name: values.cardName,
+              number: values.cardNumber,
+              code: Number(values.CVV),
+              expires: {
+                month: Number(values.cardMonthExpiry),
+                year: Number(values.cardYearExpiry)
+              }
+            }
+          },
+          products: items.map((item) => ({
+            id: item.id,
+            price: item.price as number
+          }))
+        }).then(() => {
+          goToConfirmation() // Só avança para a confirmação se a compra for bem-sucedida
+        })
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clear())
+    }
+  }, [isSuccess, dispatch])
+
   return (
-    <CartContainer>
+    <S.CartContainer>
       {currentStep === 'items' && (
         <>
           {/* Tela de itens do carrinho */}
-          <CartItemsContainer>
+          <S.CartItemsContainer>
             {items.map((product) => (
               <CartItem
                 image={product.image}
@@ -46,13 +157,13 @@ const Cart = ({ onClose }: CartProps) => {
                 id={product.id}
               />
             ))}
-          </CartItemsContainer>
-          <CartInfos>
+          </S.CartItemsContainer>
+          <S.CartInfos>
             <p>Valor Total: </p>
             <p>R$: {totalPrice.toFixed(2)}</p>
-          </CartInfos>
-          <CartButton onClick={goToAddress}>Finalizar Compra</CartButton>
-          <CartButton onClick={onClose}>Fechar</CartButton>
+          </S.CartInfos>
+          <S.CartButton onClick={goToAddress}>Finalizar Compra</S.CartButton>
+          <S.CartButton onClick={onClose}>Fechar</S.CartButton>
         </>
       )}
 
@@ -60,38 +171,100 @@ const Cart = ({ onClose }: CartProps) => {
         <>
           {/* Formulário de endereço */}
           <h3>Entrega</h3>
-          <CartForm>
-            <label>
+          <S.CartForm>
+            <label htmlFor="name">
               Quem irá receber:
-              <CartInput type="text" name="name" required />
+              <S.CartInput
+                type="text"
+                id="name"
+                name="name"
+                value={form.values.name}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                className={checkInputHasError('name') ? 'error' : ' '}
+              />
             </label>
-            <label>
+            <label htmlFor="address">
               Endereço:
-              <CartInput type="text" name="address" required />
+              <S.CartInput
+                type="text"
+                name="address"
+                value={form.values.address}
+                id="address"
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                className={checkInputHasError('address') ? 'error' : ' '}
+              />
             </label>
-            <label>
+            <label htmlFor="city">
               Cidade:
-              <CartInput type="text" name="city" required />
+              <S.CartInput
+                type="text"
+                name="city"
+                id="city"
+                value={form.values.city}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                className={checkInputHasError('city') ? 'error' : ' '}
+              />
             </label>
             <div>
-              <label>
+              <label htmlFor="cep">
                 CEP:
-                <CartInput type="number" name="cep" required />
+                <S.CartInputMask
+                  type="text"
+                  id="cep"
+                  name="cep"
+                  value={form.values.cep}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('cep') ? 'error' : ' '}
+                  mask="99999-999"
+                />
               </label>{' '}
-              <label>
+              <label htmlFor="addressNumber">
                 Número:
-                <CartInput type="number" name="number" required />
+                <S.CartInput
+                  type="text"
+                  name="addressNumber"
+                  id="addressNumber"
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={
+                    checkInputHasError('addressNumber') ? 'error' : ' '
+                  }
+                />
               </label>
             </div>
-            <label>
+            <label htmlFor="complement">
               Complemento (opcional):
-              <CartInput type="text" name="complement" />
+              <S.CartInput type="text" name="complement" id="complement" />
             </label>
-            <CartButton type="button" onClick={goToPayment}>
+            <S.CartButton
+              type="button"
+              onClick={() => {
+                form.validateForm().then((errors) => {
+                  if (Object.keys(errors).length === 0) {
+                    goToPayment() // Avança para a próxima etapa apenas se não houver erros
+                  } else {
+                    form.setTouched({
+                      name: true,
+                      address: true,
+                      city: true,
+                      cep: true,
+                      addressNumber: true,
+                      complement: true
+                    })
+                  }
+                })
+              }}
+            >
               Continuar para Pagamento
-            </CartButton>
-          </CartForm>
-          <CartButton onClick={goToItems}>Voltar para o carrinho</CartButton>
+            </S.CartButton>
+          </S.CartForm>
+          <S.CartButton onClick={goToItems}>
+            Voltar para o carrinho
+          </S.CartButton>
         </>
       )}
 
@@ -99,69 +272,138 @@ const Cart = ({ onClose }: CartProps) => {
         <>
           {/* Formulário de método de pagamento */}
           <h3>Pagamento - Valor a pagar R$: {totalPrice.toFixed(2)} </h3>
-          <CartForm>
-            <label>
+          <S.CartForm onSubmit={form.handleSubmit}>
+            <label htmlFor="cardName">
               Nome no cartão:
-              <CartInput type="text" name="cardNumber" required />
+              <S.CartInput
+                type="text"
+                name="cardName"
+                id="cardName"
+                value={form.values.cardName}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                className={checkInputHasError('cardName') ? 'error' : ''}
+              />
             </label>
-            <CardNumberDiv>
-              <label>
+
+            <S.CardNumberDiv>
+              <label htmlFor="cardNumber">
                 Número do Cartão:
-                <CartInput type="text" name="cardName" required />
+                <S.CartInputMask
+                  type="text"
+                  name="cardNumber"
+                  id="cardNumber"
+                  value={form.values.cardNumber}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('cardNumber') ? 'error' : ''}
+                  mask="9999 9999 9999 9999"
+                />
               </label>
-              <label>
+
+              <label htmlFor="CVV">
                 CVV:
-                <CartInput type="password" name="cardCVV" required />
+                <S.CartInputMask
+                  type="password"
+                  name="CVV"
+                  id="CVV"
+                  value={form.values.CVV}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('CVV') ? 'error' : ''}
+                  mask="999"
+                />
               </label>
-            </CardNumberDiv>
+            </S.CardNumberDiv>
+
             <div>
-              <label>
+              <label htmlFor="cardMonthExpiry">
                 Mês de vencimento:
-                <CartInput type="number" name="cardMonthExpiry" required />
+                <S.CartInputMask
+                  type="text"
+                  name="cardMonthExpiry"
+                  id="cardMonthExpiry"
+                  value={form.values.cardMonthExpiry}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={
+                    checkInputHasError('cardMonthExpiry') ? 'error' : ''
+                  }
+                  mask="99"
+                />
               </label>
-              <label>
+
+              <label htmlFor="cardYearExpiry">
                 Ano de vencimento:
-                <CartInput type="number" name="cardYearExpiry" required />
+                <S.CartInputMask
+                  type="text"
+                  name="cardYearExpiry"
+                  id="cardYearExpiry"
+                  value={form.values.cardYearExpiry}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={
+                    checkInputHasError('cardYearExpiry') ? 'error' : ''
+                  }
+                  mask="9999"
+                />
               </label>
             </div>
-            <CartButton type="button" onClick={goToConfirmation}>
+
+            {/* Botão de confirmar pagamento */}
+            <S.CartButton
+              type="button"
+              onClick={() => {
+                form.validateForm().then((errors) => {
+                  if (Object.keys(errors).length === 0) {
+                    form.handleSubmit() // Dispara o submit
+                  } else {
+                    form.setTouched({
+                      cardName: true,
+                      cardNumber: true,
+                      CVV: true,
+                      cardMonthExpiry: true,
+                      cardYearExpiry: true
+                    })
+                  }
+                })
+              }}
+            >
               Confirmar Pagamento
-            </CartButton>
-          </CartForm>
-          <CartButton onClick={goToAddress}>
-            Voltar para a edição de endereço{' '}
-          </CartButton>
+            </S.CartButton>
+          </S.CartForm>
+
+          <S.CartButton onClick={goToAddress}>
+            Voltar para a edição de endereço
+          </S.CartButton>
         </>
       )}
 
-      {currentStep === 'confirmation' && (
+      {/* Tela de confirmação apenas se data for true e isLoading for false */}
+      {isSuccess && !isLoading && (
         <>
-          {/* Mensagem de confirmação */}
-          <h3>Compra Confirmada!</h3>
+          <h3>Compra Confirmada! - ID - {data.orderId}</h3>
           <p>
             Estamos felizes em informar que seu pedido já está em processo de
             preparação e, em breve, será entregue no endereço fornecido.
           </p>
-
           <p>
             Gostaríamos de ressaltar que nossos entregadores não estão
             autorizados a realizar cobranças extras.
           </p>
-
           <p>
             Lembre-se da importância de higienizar as mãos após o recebimento do
             pedido, garantindo assim sua segurança e bem-estar durante a
             refeição.
           </p>
-
           <p>
             Esperamos que desfrute de uma deliciosa e agradável experiência
             gastronômica. Bom apetite!
           </p>
-          <CartButton onClick={onClose}>Concluir</CartButton>
+          <S.CartButton onClick={onClose}>Concluir</S.CartButton>
         </>
       )}
-    </CartContainer>
+    </S.CartContainer>
   )
 }
 

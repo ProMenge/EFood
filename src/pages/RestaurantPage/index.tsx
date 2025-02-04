@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+
 import Banner from '../../components/Banner'
 import Cart from '../../components/Cart'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import Menu from '../../components/Menu'
+
 import { useGetRestaurantQuery } from '../../services/api'
-import { useState } from 'react'
 
 const RestaurantPage = () => {
   const { id } = useParams() // Obtém o ID do restaurante da URL

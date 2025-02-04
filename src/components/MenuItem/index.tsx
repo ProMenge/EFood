@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import MenuItemOBJ from '../../models/MenuItems'
 import { addProduct } from '../../redux/cart/slice'
-import { Card, ItemButton, ItemImage, ItemInfo } from './styles'
+import * as S from './styles'
 
 type MenuItemProps = {
   item: MenuItemOBJ
@@ -14,14 +14,14 @@ const MenuItem = ({ item }: MenuItemProps) => {
   }
 
   return (
-    <Card>
-      <ItemImage style={{ backgroundImage: `url(${item.image})` }} />
-      <ItemInfo>
+    <S.Card>
+      <S.ItemImage style={{ backgroundImage: `url(${item.image})` }} />
+      <S.ItemInfo>
         <h3>{item.title}</h3>
         <p>{item.description}</p>
-      </ItemInfo>
-      <ItemButton onClick={handdleProductClick}>Adicionar</ItemButton>
-    </Card>
+      </S.ItemInfo>
+      <S.ItemButton onClick={handdleProductClick}>Adicionar</S.ItemButton>
+    </S.Card>
   )
 }
 

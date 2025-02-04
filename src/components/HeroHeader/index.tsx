@@ -1,14 +1,14 @@
 import background from '../../assets/images/fundo.png'
 import logo from '../../assets/images/logo.png'
-import { EfoodLogo, HeaderBar } from './styles'
+import * as S from './styles'
 
 const HeroHeader = () => {
   return (
-    <HeaderBar style={{ backgroundImage: `url(${background})` }}>
-      <EfoodLogo src={logo} />
+    <S.HeaderBar style={{ backgroundImage: `url(${background})` }}>
+      <S.EfoodLogo src={logo} />
 
       <p>Viva experiências gastronômicas no conforto da sua casa</p>
-    </HeaderBar>
+    </S.HeaderBar>
   )
 }
 

@@ -1,12 +1,4 @@
-import {
-  ModalButton,
-  ModalClose,
-  ModalContainer,
-  ModalDescription,
-  ModalImage,
-  ModalInfos,
-  ModalTitle
-} from './styles'
+import * as S from './styles'
 
 import close from '../../assets/images/close.png'
 
@@ -20,17 +12,17 @@ type Props = {
 
 const Modal = ({ image, title, description, onClose, price }: Props) => {
   return (
-    <ModalContainer>
-      <ModalImage style={{ backgroundImage: `url(${image})` }} />
-      <ModalInfos>
-        <ModalTitle>{title}</ModalTitle>
-        <ModalDescription>{description}</ModalDescription>
-        <ModalButton onClick={onClose}>
+    <S.ModalContainer>
+      <S.ModalImage style={{ backgroundImage: `url(${image})` }} />
+      <S.ModalInfos>
+        <S.ModalTitle>{title}</S.ModalTitle>
+        <S.ModalDescription>{description}</S.ModalDescription>
+        <S.ModalButton onClick={onClose}>
           Adicionar ao carrinho - R${price}
-        </ModalButton>
-      </ModalInfos>
-      <ModalClose src={close} onClick={onClose} />
-    </ModalContainer>
+        </S.ModalButton>
+      </S.ModalInfos>
+      <S.ModalClose src={close} onClick={onClose} />
+    </S.ModalContainer>
   )
 }
 

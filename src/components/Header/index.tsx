@@ -1,6 +1,6 @@
 import background from '../../assets/images/fundo.png'
 import logo from '../../assets/images/logo.png'
-import { CartButton, EfoodLogo, HeaderBar } from './styles'
+import * as S from './styles'
 
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/root-reducer'
@@ -14,15 +14,15 @@ const HeroHeader = ({ onCartToggle }: HeaderProps) => {
   const { items } = useSelector((state: RootState) => state.cartReducer)
 
   return (
-    <HeaderBar style={{ backgroundImage: `url(${background})` }}>
+    <S.HeaderBar style={{ backgroundImage: `url(${background})` }}>
       <div className="header-container">
         <StyledLink to="/">Restaurantes</StyledLink>
-        <EfoodLogo src={logo} />
-        <CartButton onClick={onCartToggle}>
+        <S.EfoodLogo src={logo} />
+        <S.CartButton onClick={onCartToggle}>
           {items.length} produto(s) no carrinho
-        </CartButton>
+        </S.CartButton>
       </div>
-    </HeaderBar>
+    </S.HeaderBar>
   )
 }
 

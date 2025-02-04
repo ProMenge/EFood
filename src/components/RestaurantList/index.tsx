@@ -1,5 +1,5 @@
 import Restaurant from '../Restaurant/index.tsx'
-import { Container, List } from './styles.ts'
+import * as S from './styles.ts'
 import { Restaurante } from '../../pages/Hero/index.tsx'
 
 export type Props = {
@@ -8,8 +8,8 @@ export type Props = {
 
 const RestaurantList = ({ restaurants }: Props) => {
   return (
-    <Container>
-      <List>
+    <S.Container>
+      <S.List>
         {restaurants.map(
           ({ id, descricao, capa, tipo, titulo, avaliacao, destacado }) => (
             <Restaurant
@@ -24,8 +24,8 @@ const RestaurantList = ({ restaurants }: Props) => {
             />
           )
         )}
-      </List>
-    </Container>
+      </S.List>
+    </S.Container>
   )
 }
 

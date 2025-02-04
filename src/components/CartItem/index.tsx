@@ -1,12 +1,6 @@
-import {
-  CartItemContainer,
-  CartItemImage,
-  CartItemInfo,
-  CartRemove
-} from './styles'
+import * as S from './styles'
 
 import { removeProduct } from '../../redux/cart/slice'
-
 import { useDispatch } from 'react-redux'
 
 import removeIcon from '../../assets/images/lixeira-de-reciclagem 1.png'
@@ -27,16 +21,16 @@ const CartItem = ({ id, image, name, price }: CartItemProps) => {
   }
 
   return (
-    <CartItemContainer>
-      <CartItemImage src={image} alt={name} />
-      <CartItemInfo>
+    <S.CartItemContainer>
+      <S.CartItemImage src={image} alt={name} />
+      <S.CartItemInfo>
         <h3>{name}</h3>
         <p>R$ {price.toFixed(2)}</p>
-      </CartItemInfo>
-      <CartRemove onClick={handleRemoveClick}>
+      </S.CartItemInfo>
+      <S.CartRemove onClick={handleRemoveClick}>
         <img src={removeIcon} alt="Remover item" />
-      </CartRemove>
-    </CartItemContainer>
+      </S.CartRemove>
+    </S.CartItemContainer>
   )
 }
 
